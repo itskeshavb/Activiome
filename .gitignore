@@ -1,0 +1,12 @@
+node_modules
+.env
+.env.*
+!.env.example
+
+# Legacy PHP files - not part of the new implementation
+accel_out_keshav.php
+index-example.php
+activiome_2026-03-30.sql
+
+# OS files
+.DS_Store
