@@ -10,3 +10,5 @@ activiome_2026-03-30.sql
 
 # OS files
 .DS_Store
+
+package-lock.json
