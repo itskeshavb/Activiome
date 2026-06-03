@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const checkJwt = require('./middleware/auth')
 const clipsRouter = require('./routes/clips')
 const tagsRouter = require('./routes/tags')
+const uploadRouter = require('./routes/upload')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -29,6 +30,9 @@ const limiter = rateLimit({
   legacyHeaders: false,
 })
 app.use(limiter)
+
+// Upload route — no JWT required, uses user_id validation instead
+app.use('/upload', uploadRouter)
 
 // All routes below require a valid Auth0 JWT
 app.use(checkJwt)

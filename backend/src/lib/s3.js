@@ -1,4 +1,4 @@
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3')
+const { S3Client, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3')
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
 
 const s3 = new S3Client({
@@ -17,4 +17,17 @@ async function getPresignedUrl(key) {
   return getSignedUrl(s3, command, { expiresIn: 60 * 60 * 6 })
 }
 
-module.exports = { getPresignedUrl }
+/**
+ * Uploads a file buffer to S3.
+ */
+async function uploadToS3(key, buffer, contentType = 'video/mp4') {
+  const command = new PutObjectCommand({
+    Bucket: process.env.S3_BUCKET,
+    Key: key,
+    Body: buffer,
+    ContentType: contentType,
+  })
+  await s3.send(command)
+}
+
+module.exports = { getPresignedUrl, uploadToS3 }
